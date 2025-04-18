@@ -1,0 +1,34 @@
+name: Build Docker Image on main.py Change
+
+on:
+  push:
+    paths:
+      - main.py  # Trigger the workflow only when main.py changes
+    branches:
+      - main  # Trigger only on the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Log in to Docker Hub (replace with your credentials)
+    - name: test1
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.aadhitya369 }}
+        password: ${{ secrets.dckr_pat_jzsWrjSq9NMzn8qSJKbV613OcXk }}
+
+    # Step 3: Build the Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t aadhitya369/test1:latest .
+
+    # Step 4: Push the Docker image to Docker Hub
+    - name: Push Docker image
+      run: |
+        docker push aadhitya369/tes1:latest
