@@ -16,12 +16,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Log in to Docker Hub (replace with your credentials)
-    - name: test1
+    # Step 2: Log in to Docker Hub
+    - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
-        username: ${{ secrets.aadhitya369 }}
-        password: ${{ secrets.dckr_pat_jzsWrjSq9NMzn8qSJKbV613OcXk }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
     # Step 3: Build the Docker image
     - name: Build Docker image
@@ -31,4 +31,4 @@ jobs:
     # Step 4: Push the Docker image to Docker Hub
     - name: Push Docker image
       run: |
-        docker push aadhitya369/tes1:latest
+        docker push aadhitya369/test1:latest
