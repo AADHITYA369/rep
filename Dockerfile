@@ -11,4 +11,4 @@ RUN pip install -r requirements.txt
 
 # Run the Python script when the container starts
 # ✅ Do this
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
