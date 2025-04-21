@@ -29,7 +29,7 @@ def create_post(post: Post):
 
 @app.get("/posts/latest")
 def get_latest_post():
-    return my_list[-1]
+    return my_list[-2]
 
 @app.get("/posts/{id}")
 def get_post_by_id(id: int):
