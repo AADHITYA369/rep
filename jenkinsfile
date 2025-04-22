@@ -1,12 +1,30 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "rep"
+        TAG = "latest"
+    }
+
     stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/AADHITYA369/rep.git'
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image using your Dockerfile
-                    docker.build("test101")
+                    sh "docker build -t ${IMAGE_NAME}:${TAG} ."
+                }
+            }
+        }
+
+        stage('Verify Docker Image') {
+            steps {
+                script {
+                    sh "docker images | grep ${IMAGE_NAME}"
                 }
             }
         }
