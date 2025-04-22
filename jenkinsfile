@@ -2,31 +2,41 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "rep"
-        TAG = "latest"
+        IMAGE_NAME = "myapp"
+        IMAGE_TAG = "latest"
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repo') {
             steps {
-                git 'https://github.com/AADHITYA369/rep.git'
+                checkout scm
             }
         }
 
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:${TAG} ."
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
         }
 
-        stage('Verify Docker Image') {
+        stage('Push to Docker Desktop') {
             steps {
                 script {
-                    sh "docker images | grep ${IMAGE_NAME}"
+                    sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} docker.io/library/${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker push docker.io/library/${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
+        }
+    }
+
+    post {
+        success {
+            echo " Build and push successful!"
+        }
+        failure {
+            echo " Build or push failed."
         }
     }
 }
