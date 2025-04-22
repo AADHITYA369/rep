@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image using your Dockerfile
-                    docker.build("your-image-name")
+                    docker.build("test101")
                 }
             }
         }
