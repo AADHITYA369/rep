@@ -14,7 +14,7 @@ class Post(BaseModel):
 my_list = [
     {"title": "title of post 1", "content": "content of post 1", "id": 1},
     {"title": "title of post 2", "content": "content of post 2", "id": 2},
-    {"title": "title of post 3", "content": "content of post 3", "id": 4}
+    {"title": "title of post 3", "content": "content of post 3", "id": 3}
     
 ]
 
