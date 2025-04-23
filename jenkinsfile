@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        def dockerUser = "aadhitya369"
         IMAGE_NAME = "myapp"
         IMAGE_TAG = "latest"
     }
@@ -16,7 +17,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                    sh "docker build -t ${dockerUser}/${imageName}:${tag} ."
                 }
             }
         }
