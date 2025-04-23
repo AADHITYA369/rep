@@ -18,7 +18,7 @@ my_list = [
     
 ]
 
-@app.get("/posts")
+@app.get("/poosts")
 def get_all_posts():
     return my_list
 
