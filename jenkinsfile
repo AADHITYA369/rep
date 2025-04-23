@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     environment {
-        def dockerUser = "aadhitya369"
+        DOCKER_USER = "aadhitya369"
         IMAGE_NAME = "myapp"
         IMAGE_TAG = "latest"
+        IMAGE_FULL_NAME = "${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
     }
 
     stages {
@@ -16,17 +17,17 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh "docker build -t ${dockerUser}/${imageName}:${tag} ."
-                }
+                sh "docker build -t ${IMAGE_FULL_NAME} ."
             }
         }
 
-        stage('Push to Docker Desktop') {
+        stage('Push to Docker Hub') {
             steps {
-                script {
-                    sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} docker.io/library/${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker push docker.io/library/${IMAGE_NAME}:${IMAGE_TAG}"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    sh '''
+                        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                        docker push ${IMAGE_FULL_NAME}
+                    '''
                 }
             }
         }
@@ -34,10 +35,10 @@ pipeline {
 
     post {
         success {
-            echo " Build and push successful!"
+            echo "✅ Build and push successful!"
         }
         failure {
-            echo " Build or push failed."
+            echo "❌ Build or push failed."
         }
     }
 }
