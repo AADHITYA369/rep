@@ -40,7 +40,7 @@ def get_post_by_id(id: int):
         return post
     return {"error": "Post not found"}
 
-@app.delete("/posts/{id}")
+@app.delete("/postss/{id}")
 def delete_post(id: int):
     indx = find_index_post(id)
     if indx is not None:
